@@ -1,13 +1,18 @@
 package me.yv84.springlayout;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
 /**
  * Hello world!
  *
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+@Controller
+public class App {
+
+    @RequestMapping("/")
+    public ModelAndView test() {
+        return new ModelAndView("index");
     }
 }
