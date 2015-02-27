@@ -21,9 +21,9 @@ public class IndexController {
         return new ModelAndView("index");
     }
 
-    @RequestMapping("/**")
-    public ModelAndView pageNotFound() {
-        logger.warn("404.page");
-        return new ModelAndView("404");
-    }
+//    @RequestMapping("/**")
+//    public ModelAndView pageNotFound() {
+//        logger.warn("404.page");
+//        return new ModelAndView("404");
+//    }
 }
