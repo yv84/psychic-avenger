@@ -4,8 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Hello world!
@@ -15,15 +20,23 @@ import org.springframework.web.servlet.ModelAndView;
 public class IndexController {
     static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-    @RequestMapping("/")
-    public ModelAndView index() {
+    @RequestMapping(value="/", method=RequestMethod.GET)
+    public ModelAndView index(HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         logger.info("index.page");
         return new ModelAndView("index");
     }
 
-//    @RequestMapping("/**")
-//    public ModelAndView pageNotFound() {
-//        logger.warn("404.page");
-//        return new ModelAndView("404");
-//    }
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ModelAndView index(@PathVariable Long id,
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        if (id == 0) { // 404 if /0?
+            logger.info("404.page");
+            throw new ResourceNotFoundException(id);
+        } else {
+            logger.info("index.page: " + id);
+            return new ModelAndView("index");
+        }
+    }
 }
