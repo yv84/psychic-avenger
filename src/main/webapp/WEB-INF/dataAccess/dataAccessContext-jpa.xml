@@ -70,7 +70,8 @@
         <property name="defaultPersistenceUnitName" value="entityManagerFactory"/>
     </bean><context:spring-configured />
 
-
+    <!-- JPA entity manager -->
+    <!-- Declare a transaction manager-->
     <bean id="transactionManager"
           class="org.springframework.orm.jpa.JpaTransactionManager" >
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
@@ -85,5 +86,22 @@
         <property name="persistenceUnitName" value="persistenceUnit"/>
         <property name="dataSource" ref="c3p0DataSource"/>
     </bean>
+
+    <!-- Hibernate session factory -->
+    <bean id="transactionManager2"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+            <property name="sessionFactory" ref="sessionFactory2"/>
+    </bean>
+    <tx:annotation-driven mode="aspectj" transaction-manager="transactionManager2"/>
+
+    <bean id="sessionFactory2"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="configLocation"
+            value="/WEB-INF/dataAccess/persistence.hbm.xml"/>
+        <property name="packagesToScan"
+                  value="me.yv84.springlayout"/>
+        <property name="dataSource" ref="c3p0DataSource"/>
+    </bean>
+
 
 </beans>
