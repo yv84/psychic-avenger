@@ -2,6 +2,7 @@ package me.yv84.springlayout.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -23,6 +24,8 @@ import java.sql.ResultSet;
 public class IndexController {
     static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
+    @Autowired
+    private DataSource c3p0DataSource;
 
     @RequestMapping(value="/", method=RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request,
@@ -45,17 +48,9 @@ public class IndexController {
             PreparedStatement pstm = null;
             ResultSet rs = null;
 
-            String usr = "sa";
-            String pwd = "";
-            String driver = "org.hsqldb.jdbcDriver";
-            String url = "jdbc:hsqldb:hsql://127.0.0.1:9001/base";
-
             String sql = "SELECT * FROM USER";
             try {
-
-                Class.forName(driver);
-                logger.debug("driver: " + driver);
-                con = DriverManager.getConnection (url,usr,pwd);
+                con = c3p0DataSource.getConnection();
                 logger.info("connect: " + con);
                 pstm = con.prepareStatement(sql);
                 logger.info("prepareStatement: " + pstm);
