@@ -10,6 +10,16 @@
   <url>http://maven.apache.org</url>
   <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+      <junit.version>3.8.1</junit.version>
+      <spring-webmvc.version>4.1.5.RELEASE</spring-webmvc.version>
+      <jetty-servlet.version>9.2.8.v20150217</jetty-servlet.version>
+      <servlet-api.version>2.5</servlet-api.version>
+      <slf4j-api.version>1.7.10</slf4j-api.version>
+      <log4j.version>1.2.15</log4j.version>
+      <slf4j.version>1.7.10</slf4j.version>
+      <jetty.version>9.2.8.v20150217</jetty.version>
+      <jdk.version>1.7</jdk.version>
   </properties>
 
   <dependencies>
@@ -17,38 +27,38 @@
       <dependency>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
-          <version>3.8.1</version>
+          <version>${junit.version}</version>
           <scope>test</scope>
       </dependency>
 
       <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-webmvc</artifactId>
-          <version>4.1.5.RELEASE</version>
+          <version>${spring-webmvc.version}</version>
       </dependency>
 
       <dependency>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-servlet</artifactId>
-          <version>9.2.8.v20150217</version>
+          <version>${jetty-servlet.version}</version>
       </dependency>
 
       <dependency>
           <groupId>javax.servlet</groupId>
           <artifactId>servlet-api</artifactId>
-          <version>2.5</version>
+          <version>${servlet-api.version}</version>
       </dependency>
 
       <dependency>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-api</artifactId>
-          <version>1.7.10</version>
+          <version>${slf4j-api.version}</version>
       </dependency>
 
       <dependency>
           <groupId>log4j</groupId>
           <artifactId>log4j</artifactId>
-          <version>1.2.15</version>
+          <version>${log4j.version}</version>
           <exclusions>
               <exclusion>
                   <groupId>com.sun.jmx</groupId>
@@ -68,7 +78,7 @@
       <dependency>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-log4j12</artifactId>
-          <version>1.7.10</version>
+          <version>${slf4j.version}</version>
       </dependency>
 
   </dependencies>
@@ -82,15 +92,15 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.2</version>
             <configuration>
-                <source>1.7</source>
-                <target>1.7</target>
+                <source>${jdk.version}</source>
+                <target>${jdk.version}</target>
             </configuration>
         </plugin>
 
         <plugin>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-maven-plugin</artifactId>
-            <version>9.2.8.v20150217</version>
+            <version>${jetty.version}</version>
         </plugin>
 
      </plugins>
