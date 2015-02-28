@@ -13,6 +13,7 @@
 
       <junit.version>3.8.1</junit.version>
       <spring.version>4.1.5.RELEASE</spring.version>
+      <hibernate-entitymanager.version>4.3.8.Final</hibernate-entitymanager.version>
       <hibernate-jpa-2.0-api.version>1.0.1.Final</hibernate-jpa-2.0-api.version>
       <c3p0.version>0.9.1.2</c3p0.version>
       <commons-dbcp.version>1.4</commons-dbcp.version>
@@ -60,6 +61,22 @@
           <artifactId>spring-orm</artifactId>
           <version>${spring.version}</version>
           <type>jar</type>
+          <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-aspects</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+
+
+      <!-- JPA Persistence Dependencies -->
+
+      <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-entitymanager</artifactId>
+          <version>${hibernate-entitymanager.version}</version>
           <scope>compile</scope>
       </dependency>
 
