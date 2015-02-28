@@ -12,8 +12,13 @@
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
       <junit.version>3.8.1</junit.version>
-      <spring-webmvc.version>4.1.5.RELEASE</spring-webmvc.version>
+      <spring.version>4.1.5.RELEASE</spring.version>
+      <hibernate-jpa-2.0-api.version>1.0.1.Final</hibernate-jpa-2.0-api.version>
+      <c3p0.version>0.9.1.2</c3p0.version>
+      <commons-dbcp.version>1.4</commons-dbcp.version>
       <jetty-servlet.version>9.2.8.v20150217</jetty-servlet.version>
+      <hsqldb.version>2.3.2</hsqldb.version>
+      <jta.version>1.1</jta.version>
       <servlet-api.version>2.5</servlet-api.version>
       <slf4j-api.version>1.7.10</slf4j-api.version>
       <log4j.version>1.2.15</log4j.version>
@@ -34,7 +39,7 @@
       <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-webmvc</artifactId>
-          <version>${spring-webmvc.version}</version>
+          <version>${spring.version}</version>
       </dependency>
 
       <dependency>
@@ -43,6 +48,53 @@
           <version>${jetty-servlet.version}</version>
       </dependency>
 
+      <!-- Embedded database -->
+      <dependency>
+          <groupId>org.hsqldb</groupId>
+          <artifactId>hsqldb</artifactId>
+          <version>${hsqldb.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-orm</artifactId>
+          <version>${spring.version}</version>
+          <type>jar</type>
+          <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+          <groupId>org.hibernate.javax.persistence</groupId>
+          <artifactId>hibernate-jpa-2.0-api</artifactId>
+          <version>${hibernate-jpa-2.0-api.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>javax.transaction</groupId>
+          <artifactId>jta</artifactId>
+          <version>${jta.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>commons-dbcp</groupId>
+          <artifactId>commons-dbcp</artifactId>
+          <version>${commons-dbcp.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>c3p0</groupId>
+          <artifactId>c3p0</artifactId>
+          <version>${c3p0.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-jdbc</artifactId>
+          <version>${spring.version}</version>
+      </dependency>
+
+
+      <!-- Servlet -->
       <dependency>
           <groupId>javax.servlet</groupId>
           <artifactId>servlet-api</artifactId>

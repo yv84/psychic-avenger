@@ -3,7 +3,6 @@ package me.yv84.springlayout.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * Hello world!
@@ -19,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class IndexController {
     static final Logger logger = LoggerFactory.getLogger(IndexController.class);
+
 
     @RequestMapping(value="/", method=RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request,
@@ -35,6 +39,60 @@ public class IndexController {
             logger.info("404.page");
             throw new ResourceNotFoundException(id);
         } else {
+
+            logger.info("id: " + id);
+            Connection con = null;
+            PreparedStatement pstm = null;
+            ResultSet rs = null;
+
+            String usr = "sa";
+            String pwd = "";
+            String driver = "org.hsqldb.jdbcDriver";
+            String url = "jdbc:hsqldb:hsql://127.0.0.1:9001/base";
+
+            String sql = "SELECT * FROM USER";
+            try {
+
+                Class.forName(driver);
+                logger.debug("driver: " + driver);
+                con = DriverManager.getConnection (url,usr,pwd);
+                logger.info("connect: " + con);
+                pstm = con.prepareStatement(sql);
+                logger.info("prepareStatement: " + pstm);
+                rs = pstm.executeQuery();
+                logger.info("executeQuery: " + rs);
+                while (rs.next()){
+                    System.out.println(
+                        rs.getInt("ID")
+                        + ", "
+                        + rs.getString("USERNAME")
+                    );
+                }
+                rs.close();
+
+                System.out.println(rs);
+            }catch (Exception e){
+
+                e.printStackTrace();
+                throw new RuntimeException(e);
+
+            }finally{
+
+                try{
+
+                    //Closing all the opened resources
+                    if (rs!=null) rs.close();
+                    if (pstm!=null) pstm.close();
+                    if (con!=null) con.close();
+
+                }catch (Exception e){
+
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+
+                }
+
+            }
             logger.info("index.page: " + id);
             return new ModelAndView("index");
         }

@@ -4,6 +4,6 @@
     <title></title>
 </head>
 <body>
-    Internal Server Error, 505.
+    Internal Server Error, 500.
 </body>
 </html>
