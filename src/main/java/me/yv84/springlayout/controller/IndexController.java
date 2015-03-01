@@ -25,7 +25,7 @@ public class IndexController {
     static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
-    private DataSource c3p0DataSource;
+    private DataSource dataSource;
 
     @RequestMapping(value="/", method=RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request,
@@ -50,7 +50,7 @@ public class IndexController {
 
             String sql = "SELECT * FROM USER";
             try {
-                con = c3p0DataSource.getConnection();
+                con = dataSource.getConnection();
                 logger.info("connect: " + con);
                 pstm = con.prepareStatement(sql);
                 logger.info("prepareStatement: " + pstm);

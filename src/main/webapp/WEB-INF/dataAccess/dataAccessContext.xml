@@ -58,6 +58,7 @@
         <property name="username" value="${db.username}" />
         <property name="password" value="${db.password}" />
     </bean>
+    <alias name="c3p0DataSource" alias="dataSource"/>
 
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <bean id="placeholderConfig"
