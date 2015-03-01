@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="
         http://www.springframework.org/schema/context
@@ -18,91 +19,76 @@
 
     <!-- Data Source -->
     <bean id="c3p0DataSource" autowire="byName"
-          class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <!-- access -->
-        <property name="driverClass" value="${db.driverClassName}"></property>
-        <property name="jdbcUrl" value="${db.url}"/>
-        <property name="user" value="${db.username}"/>
-        <property name="password" value="${db.password}"/>
-        <!-- pool sizing -->
-        <property name="initialPoolSize" value="3" />
-        <property name="minPoolSize" value="6" />
-        <property name="maxPoolSize" value="25" />
-        <property name="acquireIncrement" value="3" />
-        <property name="maxStatements" value="50" />
-        <!-- retries -->
-        <property name="acquireRetryAttempts" value="30" />
-        <property name="acquireRetryDelay" value="1000" /> <!-- 1s -->
-        <property name="breakAfterAcquireFailure" value="false" />
-        <!-- refreshing connections -->
-        <property name="maxIdleTime" value="180" /> <!-- 3min -->
-        <property name="maxConnectionAge" value="10" /> <!-- 1h -->
-        <!-- timeouts and testing -->
-        <property name="checkoutTimeout" value="5000" /> <!-- 5s -->
-        <property name="idleConnectionTestPeriod" value="60" /> <!-- 60 -->
-        <property name="testConnectionOnCheckout" value="true" />
-        <property name="testConnectionOnCheckin" value="true" />
-    </bean>
+          class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+        p:driverClass="${db.driverClassName}"
+        p:jdbcUrl="${db.url}"
+        p:user="${db.username}"
+        p:password="${db.password}"
+        p:initialPoolSize="3"
+        p:minPoolSize="6"
+        p:maxPoolSize="25"
+        p:acquireIncrement="3"
+        p:maxStatements="50"
+        p:acquireRetryAttempts="30"
+        p:acquireRetryDelay="1000"
+        p:breakAfterAcquireFailure="false"
+        p:maxIdleTime="180"
+        p:maxConnectionAge="10"
+        p:checkoutTimeout="5000"
+        p:idleConnectionTestPeriod="60"
+        p:testConnectionOnCheckout="true"
+        p:testConnectionOnCheckin="true" />
     <bean id="dbcpDataSource"  autowire="byName"
-          class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName" value="${db.driverClassName}" />
-        <property name="url" value="${db.url}" />
-        <property name="username" value="${db.username}" />
-        <property name="password" value="${db.password}" />
-        <property name="maxActive" value="5" />
-    </bean>
+          class="org.apache.commons.dbcp.BasicDataSource"
+        p:driverClassName="${db.driverClassName}"
+        p:url="${db.url}"
+        p:username="${db.username}"
+        p:password="${db.password}"
+        p:maxActive="5" />
     <bean id="jdbcDataSource"  autowire="byName"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${db.driverClassName}" />
-        <property name="url" value="${db.url}" />
-        <property name="username" value="${db.username}" />
-        <property name="password" value="${db.password}" />
-    </bean>
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+        p:driverClassName="${db.driverClassName}"
+        p:url="${db.url}"
+        p:username="${db.username}"
+        p:password="${db.password}" />
     <alias name="c3p0DataSource" alias="dataSource"/>
 
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <bean id="placeholderConfig"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" />
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" />
 
 
     <!-- Turn on AspectJ @Configurable support -->
-    <bean id="org.springframework.context.annotation.internalPersistenceAnnotationProcessor"
-          class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" >
-        <property name="defaultPersistenceUnitName" value="entityManagerFactory"/>
-    </bean><context:spring-configured />
+    <bean id="org.springframework.context.annotation.internalPersistenceAnnotationProcessor" 
+          class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"
+        p:defaultPersistenceUnitName="entityManagerFactory" />
+    <context:spring-configured />
 
     <!-- JPA entity manager -->
     <!-- Declare a transaction manager-->
-    <bean id="transactionManager"
-          class="org.springframework.orm.jpa.JpaTransactionManager" >
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
-    </bean>
+    <bean id="transactionManager" 
+          class="org.springframework.orm.jpa.JpaTransactionManager"
+        p:entityManagerFactory-ref="entityManagerFactory" />
 
     <!-- proxy / aspectj -->
     <tx:annotation-driven mode="aspectj" transaction-manager="transactionManager"/>
 
     <!-- jpa entitymanager -->
-    <bean id="entityManagerFactory"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" >
-        <property name="persistenceUnitName" value="persistenceUnit"/>
-        <property name="dataSource" ref="c3p0DataSource"/>
-    </bean>
+    <bean id="entityManagerFactory" 
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+        p:persistenceUnitName="persistenceUnit"
+        p:dataSource-ref="dataSource" />
 
     <!-- Hibernate session factory -->
     <bean id="transactionManager2"
-          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-            <property name="sessionFactory" ref="sessionFactory2"/>
-    </bean>
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+          p:sessionFactory-ref="sessionFactory2" />
     <tx:annotation-driven mode="aspectj" transaction-manager="transactionManager2"/>
 
     <bean id="sessionFactory2"
-          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="configLocation"
-            value="/WEB-INF/dataAccess/persistence.hbm.xml"/>
-        <property name="packagesToScan"
-                  value="me.yv84.springlayout"/>
-        <property name="dataSource" ref="c3p0DataSource"/>
-    </bean>
-
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+        p:configLocations="/WEB-INF/dataAccess/persistence.hbm.xml"
+        p:packagesToScan="me.yv84.springlayout"
+        p:dataSource-ref="dataSource"/>
 
 </beans>
