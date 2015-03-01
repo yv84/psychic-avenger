@@ -24,8 +24,7 @@
       <log4j.version>1.2.15</log4j.version>
       <slf4j.version>1.7.10</slf4j.version>
       <jetty.version>9.2.8.v20150217</jetty.version>
-      <jdk.version>1.7</jdk.version>
-      
+      <jdk.version>1.8</jdk.version>
 
       <!-- glassfish -->
       <glassfish.home>${env.glassfishdir}</glassfish.home>
@@ -38,6 +37,13 @@
       <glassfish.adminPort>4848</glassfish.adminPort>
       <maven-glassfish.version>2.1</maven-glassfish.version>
       
+      <!-- tomcat -->
+      <tomcat7-maven.version>2.2</tomcat7-maven.version>
+      <tomcat.url>http://localhost:8080/manager/text</tomcat.url>
+      <tomcat.username>admin</tomcat.username>
+      <tomcat.password>admin</tomcat.password>
+      <cargo-maven2.version>1.4.12</cargo-maven2.version>
+
   </properties>
 
   <dependencies>
@@ -175,6 +181,13 @@
           <version>${slf4j.version}</version>
       </dependency>
 
+      <dependency>
+          <groupId>jstl</groupId>
+          <artifactId>jstl</artifactId>
+          <version>1.2</version>
+      </dependency>
+
+
   </dependencies>
   <build>
     <finalName>springlayout</finalName>
@@ -191,6 +204,8 @@
             </configuration>
         </plugin>
 
+        <!-- jetty server plugin -->
+        <!-- mvn compile -Djetty.port=8008 jetty:run -->
         <plugin>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-maven-plugin</artifactId>
@@ -198,7 +213,8 @@
         </plugin>
 
 
-        <!--glassfish server plugin-->
+        <!-- glassfish server plugin -->
+        <!-- mvn glassfish:deploy -->
         <plugin>
             <groupId>org.glassfish.maven.plugin</groupId>
             <artifactId>maven-glassfish-plugin</artifactId>
@@ -245,12 +261,54 @@
             </executions>
         </plugin>
         
+        <!-- tomcat server plugin -->
+        <!-- mvn -Dmaven.tomcat.port=8080 tomcat:run-war -->
+        <!-- mvn tomcat7:redeploy -Dtomcat.username=admin -Dtomcat.password=admin -->
+        <plugin>
+            <groupId>org.apache.tomcat.maven</groupId>
+            <artifactId>tomcat7-maven-plugin</artifactId>
+            <version>${tomcat7-maven.version}</version>
+            <dependencies>
+                <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                    <version>${slf4j.version}</version>
+                </dependency>
+            </dependencies>
+            <configuration>
+                <path>/${project.build.finalName}</path>
+                <update>true</update>
+                <url>${tomcat.url}</url>
+                <server>TomcatServer</server>
+                <username>${tomcat.username}</username>
+                <password>${tomcat.password}</password>
+                <warFile>${project.build.directory}/${project.build.finalName}.war</warFile>
+            </configuration>
+        </plugin>
         
-        
-        
-        
-        
+        <!-- tomcat -->
+        <!-- mvn cargo:deploy -->
+        <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <version>${cargo-maven2.version}</version>
+            <configuration>
+                <container>
+                    <containerId>tomcat7x</containerId>
+                    <home>${env.CATALINA_HOME}</home>
+                </container>
+                <configuration>
+                    <type>existing</type>
+                    <home>${env.CATALINA_HOME}</home>
+                </configuration>
+                <deployer>
+                    <type>installed</type>
+                </deployer>
+            </configuration>
+        </plugin>
 
-     </plugins>
+
+
+    </plugins>
   </build>
 </project>
