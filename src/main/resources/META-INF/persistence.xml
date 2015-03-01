@@ -1,13 +1,8 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!--https://docs.jboss.org/hibernate/orm/3.6/quickstart/en-US/html/hibernate-gsg-tutorial-jpa.html#hibernate-gsg-tutorial-jpa-config-->
-<!--In Java™ SE environments the persistence provider (Hibernate in this case) is required to locate all JPA configuration files by classpath lookup of the META-INF/persistence.xml resource name.-->
-<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
-                 http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
-             version="2.0">
+    http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="persistenceUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <!--<class>me.yv84.model.User</class>-->

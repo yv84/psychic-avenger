@@ -25,6 +25,19 @@
       <slf4j.version>1.7.10</slf4j.version>
       <jetty.version>9.2.8.v20150217</jetty.version>
       <jdk.version>1.7</jdk.version>
+      
+
+      <!-- glassfish -->
+      <glassfish.home>${env.glassfishdir}</glassfish.home>
+      <glassfish.user>admin</glassfish.user>
+      <glassfish.domain>${env.glassfishdomain}</glassfish.domain>
+      <glassfish.passfile>
+          ${glassfish.home}/domains/${glassfish.domain}/master-password
+      </glassfish.passfile>
+      <glassfish.httpPort>8080</glassfish.httpPort>
+      <glassfish.adminPort>4848</glassfish.adminPort>
+      <maven-glassfish.version>2.1</maven-glassfish.version>
+      
   </properties>
 
   <dependencies>
@@ -183,6 +196,60 @@
             <artifactId>jetty-maven-plugin</artifactId>
             <version>${jetty.version}</version>
         </plugin>
+
+
+        <!--glassfish server plugin-->
+        <plugin>
+            <groupId>org.glassfish.maven.plugin</groupId>
+            <artifactId>maven-glassfish-plugin</artifactId>
+            <version>${maven-glassfish.version}</version>
+
+            <configuration>
+                <glassfishDirectory>${glassfish.home}</glassfishDirectory>
+                <echo>true</echo>
+                <debug>true</debug>
+                <autoCreate>true</autoCreate>
+                <glassfishDirectory>${glassfish.home}</glassfishDirectory>
+                <user>${glassfish.user}</user>
+                <passwordFile>${glassfish.passfile}</passwordFile>
+                <domain>
+                    <name>${glassfish.domain}</name>
+                    <httpPort>${glassfish.httpPort}</httpPort>
+                    <adminPort>${glassfish.adminPort}</adminPort>
+                </domain>
+                <components>
+                    <component>
+                        <name>${project.artifactId}</name>
+                        <artifact>${project.build.directory}/${project.build.finalName}.war</artifact>
+                    </component>
+                </components>
+            </configuration>
+
+            <executions>
+                <execution>
+                    <phase>none</phase>
+                    <goals>
+                        <goal>deploy</goal>
+                    </goals>
+                    <configuration>
+                        <debug>true</debug>
+                        <terse>false</terse>
+                        <autoCreate>false</autoCreate>
+                        <domain>
+                            <name>${glassfish.domain}</name>
+                            <httpPort>${glassfish.httpPort}</httpPort>
+                            <adminPort>${glassfish.adminPort}</adminPort>
+                        </domain>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        
+        
+        
+        
+        
+        
 
      </plugins>
   </build>
