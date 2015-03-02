@@ -1,5 +1,6 @@
 package me.yv84.springlayout.controller;
 
+import me.yv84.springlayout.service.AccountManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,21 +12,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.Iterator;
+import java.util.List;
 
-/**
- * Hello world!
- *
- */
+
 @Controller
 public class IndexController {
     static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
-    private DataSource dataSource;
+    private AccountManager accountManager;
 
     @RequestMapping(value="/", method=RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request,
@@ -43,50 +39,11 @@ public class IndexController {
             throw new ResourceNotFoundException(id);
         } else {
 
-            logger.info("id: " + id);
-            Connection con = null;
-            PreparedStatement pstm = null;
-            ResultSet rs = null;
-
-            String sql = "SELECT * FROM USER";
-            try {
-                con = dataSource.getConnection();
-                logger.info("connect: " + con);
-                pstm = con.prepareStatement(sql);
-                logger.info("prepareStatement: " + pstm);
-                rs = pstm.executeQuery();
-                logger.info("executeQuery: " + rs);
-                while (rs.next()){
-                    System.out.println(
-                        rs.getInt("ID")
-                        + ", "
-                        + rs.getString("USERNAME")
-                    );
-                }
-                rs.close();
-
-                System.out.println(rs);
-            }catch (Exception e){
-
-                e.printStackTrace();
-                throw new RuntimeException(e);
-
-            }finally{
-
-                try{
-
-                    //Closing all the opened resources
-                    if (rs!=null) rs.close();
-                    if (pstm!=null) pstm.close();
-                    if (con!=null) con.close();
-
-                }catch (Exception e){
-
-                    e.printStackTrace();
-                    throw new RuntimeException(e);
-
-                }
-
+            List<Object> rsList = accountManager.getAll(id);
+            Iterator<Object> resultIterator = rsList.iterator();
+            while (resultIterator.hasNext()) {
+                Object[] rs = (Object[]) resultIterator.next();
+                System.out.println(rs[0] + ", " + rs[1]);
             }
             logger.info("index.page: " + id);
             return new ModelAndView("index");
