@@ -32,7 +32,7 @@
         p:defaultEncoding="UTF-8"
         p:cacheSeconds="0" />
 
-    <context:component-scan base-package="me.yv84.springlayout.controller" />
+    <context:component-scan base-package="me.yv84.springlayout" />
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
     <!-- We need this bean as our Controllers just return the name of the view, instead of ModelAndView objects -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
