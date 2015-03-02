@@ -39,12 +39,17 @@ public class IndexController {
             throw new ResourceNotFoundException(id);
         } else {
 
-            List<Object> rsList = accountManager.getAll(id);
+            List<Object> rsList = accountManager.getAll();
             Iterator<Object> resultIterator = rsList.iterator();
             while (resultIterator.hasNext()) {
                 Object[] rs = (Object[]) resultIterator.next();
                 System.out.println(rs[0] + ", " + rs[1]);
             }
+            {
+                Object[] rs = accountManager.get(id);
+                System.out.println(rs[0] + ", " + rs[1]);
+            }
+
             logger.info("index.page: " + id);
             return new ModelAndView("index");
         }

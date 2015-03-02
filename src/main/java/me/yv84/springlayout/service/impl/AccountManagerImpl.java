@@ -14,8 +14,13 @@ public class AccountManagerImpl implements AccountManager {
     private AccountDao accountDao;
     
     @Override
-    public List<Object> getAll(Long id) {
-        return accountDao.getAll(id);
+    public List<Object> getAll() {
+        return accountDao.getAll();
+    }
+
+    @Override
+    public Object[] get(Long id) {
+        return accountDao.get(id);
     }
     
 }

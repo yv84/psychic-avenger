@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface AccountManager {
 
-    List<Object> getAll(Long id);
+    List<Object> getAll();
+
+    Object[] get(Long id);
     
 }
