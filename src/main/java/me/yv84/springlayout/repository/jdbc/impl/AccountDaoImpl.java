@@ -1,6 +1,7 @@
 package me.yv84.springlayout.repository.jdbc.impl;
 
 import com.mchange.v2.c3p0.C3P0ProxyStatement;
+import me.yv84.springlayout.model.Account;
 import me.yv84.springlayout.repository.jdbc.AccountDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,7 @@ public class AccountDaoImpl implements AccountDao {
     @Autowired
     private DataSource dataSource;
 
-    public List<Object> getAll() {
+    public List<Account> getAll() {
 
         Connection con = null;
         PreparedStatement pstm = null;
@@ -33,7 +34,7 @@ public class AccountDaoImpl implements AccountDao {
 
         String sql = "SELECT * FROM USER";
 
-        List<Object> result = new ArrayList<Object>();
+        List<Account> result = new ArrayList<Account>();
         
         try {
             con = dataSource.getConnection();
@@ -46,8 +47,9 @@ public class AccountDaoImpl implements AccountDao {
             logger.info("executeQuery: " + rs);
             
             while (rs.next()) {
-                Object[] resultArray = {rs.getInt("ID"), rs.getString("USERNAME")};
-                result.add(resultArray);
+                Account account = new Account(
+                    new Long(rs.getInt("ID")), rs.getString("USERNAME"));
+                result.add(account);
             }
 
             rs.close();
@@ -79,7 +81,7 @@ public class AccountDaoImpl implements AccountDao {
     };
 
 
-    public Object[] get(Long id) {
+    public Account get(Long id) {
 
         logger.debug("id: " + id);
         Connection con = null;
@@ -88,7 +90,7 @@ public class AccountDaoImpl implements AccountDao {
 
         String sql = "SELECT * FROM USER WHERE USER.ID = ?";
 
-        Object[] result = null;
+        Account result = null;
 
         try {
             con = dataSource.getConnection();
@@ -104,8 +106,9 @@ public class AccountDaoImpl implements AccountDao {
 
             
             if (rs.next()) {
-                Object[] resultArray = {rs.getInt("ID"), rs.getString("USERNAME")};
-                result = resultArray;
+                Account account = new Account(
+                    new Long(rs.getInt("ID")), rs.getString("USERNAME"));
+                result = account;
             }
 
             rs.close();

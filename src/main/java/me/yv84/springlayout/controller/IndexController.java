@@ -1,5 +1,6 @@
 package me.yv84.springlayout.controller;
 
+import me.yv84.springlayout.model.Account;
 import me.yv84.springlayout.service.AccountManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,15 +40,15 @@ public class IndexController {
             throw new ResourceNotFoundException(id);
         } else {
 
-            List<Object> rsList = accountManager.getAll();
-            Iterator<Object> resultIterator = rsList.iterator();
+            List<Account> rsList = accountManager.getAll();
+            Iterator<Account> resultIterator = rsList.iterator();
             while (resultIterator.hasNext()) {
-                Object[] rs = (Object[]) resultIterator.next();
-                System.out.println(rs[0] + ", " + rs[1]);
+                Account rs = resultIterator.next();
+                System.out.println(rs.getId() + ", " + rs.getUsername());
             }
             {
-                Object[] rs = accountManager.get(id);
-                System.out.println(rs[0] + ", " + rs[1]);
+                Account rs = accountManager.get(id);
+                System.out.println(rs.getId() + ", " + rs.getUsername());
             }
 
             logger.info("index.page: " + id);

@@ -1,5 +1,6 @@
 package me.yv84.springlayout.service.impl;
 
+import me.yv84.springlayout.model.Account;
 import me.yv84.springlayout.repository.jdbc.AccountDao;
 import me.yv84.springlayout.service.AccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,12 @@ public class AccountManagerImpl implements AccountManager {
     private AccountDao accountDao;
     
     @Override
-    public List<Object> getAll() {
+    public List<Account> getAll() {
         return accountDao.getAll();
     }
 
     @Override
-    public Object[] get(Long id) {
+    public Account get(Long id) {
         return accountDao.get(id);
     }
     

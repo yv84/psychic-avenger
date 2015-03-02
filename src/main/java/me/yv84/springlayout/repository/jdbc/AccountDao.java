@@ -1,12 +1,14 @@
 package me.yv84.springlayout.repository.jdbc;
 
+import me.yv84.springlayout.model.Account;
+
 import java.util.List;
 
 
 public interface AccountDao {
 
-    List<Object> getAll();
+    List<Account> getAll();
 
-    Object[] get(Long id);
+    Account get(Long id);
     
 }
