@@ -27,7 +27,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/dataAccess/dataAccessContext.xml</param-value>
+        <param-value>/WEB-INF/spring/dataAccess/dataAccessContext.xml</param-value>
     </context-param>
 
     <!-- Processes application requests -->

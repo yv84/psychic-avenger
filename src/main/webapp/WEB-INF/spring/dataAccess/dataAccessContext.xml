@@ -15,7 +15,7 @@
     <!--<context:property-placeholder-->
             <!--location="classpath*:db.properties"/> src/main/resources/-->
     <context:property-placeholder
-            location="/WEB-INF/dataAccess/db.properties"/>
+            location="/WEB-INF/spring/dataAccess/db.properties"/>
 
     <!-- Data Source -->
     <bean id="c3p0DataSource" autowire="byName"
@@ -87,7 +87,7 @@
 
     <bean id="sessionFactory2"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
-        p:configLocations="/WEB-INF/dataAccess/persistence.hbm.xml"
+        p:configLocations="/WEB-INF/spring/dataAccess/persistence.hbm.xml"
         p:packagesToScan="me.yv84.springlayout"
         p:dataSource-ref="dataSource"/>
 
