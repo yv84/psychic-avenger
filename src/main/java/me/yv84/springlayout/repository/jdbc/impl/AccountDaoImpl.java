@@ -2,7 +2,7 @@ package me.yv84.springlayout.repository.jdbc.impl;
 
 import com.mchange.v2.c3p0.C3P0ProxyStatement;
 import me.yv84.springlayout.model.Account;
-import me.yv84.springlayout.repository.jdbc.AccountDao;
+import me.yv84.springlayout.repository.AccountDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class AccountDaoImpl implements AccountDao {
 
 
     public List<Account> getAll() {
-
+        logger.debug("dao.jdbc getAll");
         Connection con = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -89,8 +89,9 @@ public class AccountDaoImpl implements AccountDao {
 
 
     public Account get(Long id) {
-
-        logger.debug("id: " + id);
+        
+        logger.debug("dao.jdbc get id:"  + id);
+        
         Connection con = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -259,6 +260,53 @@ public class AccountDaoImpl implements AccountDao {
 
             pstm = con.prepareStatement(sqlQuery);
             pstm.setLong(1, account.getId());
+
+            logger.debug("prepareStatement: "
+                + printC3p0Statement((C3P0ProxyStatement) pstm));
+            rs = pstm.executeQuery();
+            logger.info("executeQuery: " + rs);
+
+            rs.close();
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+            throw new RuntimeException(e);
+
+        }finally{
+
+            try{
+
+                //Closing all the opened resources
+                if (rs!=null) rs.close();
+                if (pstm!=null) pstm.close();
+                if (con!=null) con.close();
+
+            }catch (Exception e){
+
+                e.printStackTrace();
+                throw new RuntimeException(e);
+
+            }
+
+        }
+    };
+
+    public void delete(Long id) {
+
+        logger.debug("id: " + id);
+        Connection con = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        String sqlQuery = "DELETE USER WHERE ID = ?";
+
+        try {
+            con = dataSource.getConnection();
+            logger.debug("connect: " + con);
+
+            pstm = con.prepareStatement(sqlQuery);
+            pstm.setLong(1, id);
 
             logger.debug("prepareStatement: "
                 + printC3p0Statement((C3P0ProxyStatement) pstm));

@@ -1,7 +1,7 @@
 package me.yv84.springlayout.service.impl;
 
 import me.yv84.springlayout.model.Account;
-import me.yv84.springlayout.repository.jdbc.AccountDao;
+import me.yv84.springlayout.repository.AccountDao;
 import me.yv84.springlayout.service.AccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class AccountManagerImpl implements AccountManager {
     
     @Override
     public List<Account> getAll() {
-        return jdbcAccountDao.getAll();
+        return jpaAccountDao.getAll();
     }
 
     @Override

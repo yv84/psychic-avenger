@@ -16,6 +16,8 @@ public class Account extends BaseModel {
         return username;
     }
 
+    public Account() {}
+    
     public Account(Long id, String username) {
         this.id = id;
         this.username = username;
