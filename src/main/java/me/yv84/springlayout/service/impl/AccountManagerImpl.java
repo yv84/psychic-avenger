@@ -23,5 +23,20 @@ public class AccountManagerImpl implements AccountManager {
     public Account get(Long id) {
         return accountDao.get(id);
     }
-    
+
+    @Override
+    public void add(Account account) {
+        accountDao.add(account);
+    }
+
+    @Override
+    public void update(Account account) {
+        accountDao.update(account);
+    }
+
+    @Override
+    public void delete(Account account) {
+        accountDao.delete(account);
+    }
+
 }

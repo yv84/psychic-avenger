@@ -26,20 +26,27 @@ public class AccountDaoImpl implements AccountDao {
     @Autowired
     private DataSource dataSource;
 
+    private static String printC3p0Statement( C3P0ProxyStatement stmt )
+        throws NoSuchMethodException, IllegalAccessException, SQLException, InvocationTargetException {
+        java.lang.reflect.Method m = java.io.PrintStream.class.getMethod("println", new Class[]{Object.class});
+        return (String) stmt.rawStatementOperation(m, System.out, new Object[]{ C3P0ProxyStatement.RAW_STATEMENT });
+    }
+
+
     public List<Account> getAll() {
 
         Connection con = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
 
-        String sql = "SELECT * FROM USER";
+        String sqlQuery = "SELECT * FROM USER";
 
         List<Account> result = new ArrayList<Account>();
         
         try {
             con = dataSource.getConnection();
             logger.debug("connect: " + con);
-            pstm = con.prepareStatement(sql);
+            pstm = con.prepareStatement(sqlQuery);
             logger.debug("prepareStatement: "
                 + printC3p0Statement((C3P0ProxyStatement) pstm));
 
@@ -88,7 +95,7 @@ public class AccountDaoImpl implements AccountDao {
         PreparedStatement pstm = null;
         ResultSet rs = null;
 
-        String sql = "SELECT * FROM USER WHERE USER.ID = ?";
+        String sqlQuery = "SELECT * FROM USER WHERE USER.ID = ?";
 
         Account result = null;
 
@@ -96,13 +103,13 @@ public class AccountDaoImpl implements AccountDao {
             con = dataSource.getConnection();
             logger.debug("connect: " + con);
             
-            pstm = con.prepareStatement(sql);
+            pstm = con.prepareStatement(sqlQuery);
             pstm.setLong(1, id);
             
             logger.debug("prepareStatement: "
                 + printC3p0Statement((C3P0ProxyStatement) pstm));
             rs = pstm.executeQuery();
-            logger.info("executeQuery: " + rs.getStatement());
+            logger.info("executeQuery: " + rs);
 
             
             if (rs.next()) {
@@ -139,12 +146,149 @@ public class AccountDaoImpl implements AccountDao {
         return result;
     };
 
-    private static String printC3p0Statement( C3P0ProxyStatement stmt )
-            throws NoSuchMethodException, IllegalAccessException, SQLException, InvocationTargetException {
-        java.lang.reflect.Method m = java.io.PrintStream.class.getMethod("println", new Class[]{Object.class});
-        return (String) stmt.rawStatementOperation(m, System.out, new Object[]{ C3P0ProxyStatement.RAW_STATEMENT });
-    }
-    
-    
+
+    public void add(Account account) {
+
+        logger.debug("id: " + account);
+        Connection con = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        String sqlQuery = "INSERT INTO USER (ID, USERNAME) VALUES (?, ?)";
+
+        try {
+            con = dataSource.getConnection();
+            logger.debug("connect: " + con);
+
+            pstm = con.prepareStatement(sqlQuery);
+            pstm.setLong(1, account.getId());
+            pstm.setString(2, account.getUsername());
+
+            logger.debug("prepareStatement: "
+                + printC3p0Statement((C3P0ProxyStatement) pstm));
+            rs = pstm.executeQuery();
+            logger.info("executeQuery: " + rs);
+
+            rs.close();
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+            throw new RuntimeException(e);
+
+        }finally{
+
+            try{
+
+                //Closing all the opened resources
+                if (rs!=null) rs.close();
+                if (pstm!=null) pstm.close();
+                if (con!=null) con.close();
+
+            }catch (Exception e){
+
+                e.printStackTrace();
+                throw new RuntimeException(e);
+
+            }
+
+        }
+    };
+
+
+    public void update(Account account) {
+
+        logger.debug("id: " + account);
+        Connection con = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        String sqlQuery = "UPDATE USER SET USERNAME = ? WHERE ID = ?";
+
+        try {
+            con = dataSource.getConnection();
+            logger.debug("connect: " + con);
+
+            pstm = con.prepareStatement(sqlQuery);
+            pstm.setString(1, account.getUsername());
+            pstm.setLong(2, account.getId());
+
+            logger.debug("prepareStatement: "
+                + printC3p0Statement((C3P0ProxyStatement) pstm));
+            rs = pstm.executeQuery();
+            logger.info("executeQuery: " + rs);
+
+            rs.close();
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+            throw new RuntimeException(e);
+
+        }finally{
+
+            try{
+
+                //Closing all the opened resources
+                if (rs!=null) rs.close();
+                if (pstm!=null) pstm.close();
+                if (con!=null) con.close();
+
+            }catch (Exception e){
+
+                e.printStackTrace();
+                throw new RuntimeException(e);
+
+            }
+
+        }
+    };
+
+    public void delete(Account account) {
+
+        logger.debug("id: " + account);
+        Connection con = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        String sqlQuery = "DELETE USER WHERE ID = ?";
+
+        try {
+            con = dataSource.getConnection();
+            logger.debug("connect: " + con);
+
+            pstm = con.prepareStatement(sqlQuery);
+            pstm.setLong(1, account.getId());
+
+            logger.debug("prepareStatement: "
+                + printC3p0Statement((C3P0ProxyStatement) pstm));
+            rs = pstm.executeQuery();
+            logger.info("executeQuery: " + rs);
+
+            rs.close();
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+            throw new RuntimeException(e);
+
+        }finally{
+
+            try{
+
+                //Closing all the opened resources
+                if (rs!=null) rs.close();
+                if (pstm!=null) pstm.close();
+                if (con!=null) con.close();
+
+            }catch (Exception e){
+
+                e.printStackTrace();
+                throw new RuntimeException(e);
+
+            }
+
+        }
+    };
     
 }
