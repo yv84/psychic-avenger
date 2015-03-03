@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Repository(value = "accountDao")
+@Repository(value = "jdbcAccountDao")
 public class AccountDaoImpl implements AccountDao {
 
     static final Logger logger = LoggerFactory.getLogger(AccountDaoImpl.class);

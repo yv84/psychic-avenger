@@ -12,31 +12,34 @@ import java.util.List;
 public class AccountManagerImpl implements AccountManager {
 
     @Autowired
-    private AccountDao accountDao;
+    private AccountDao jdbcAccountDao;
+    
+    @Autowired
+    private AccountDao jpaAccountDao;
     
     @Override
     public List<Account> getAll() {
-        return accountDao.getAll();
+        return jdbcAccountDao.getAll();
     }
 
     @Override
     public Account get(Long id) {
-        return accountDao.get(id);
+        return jpaAccountDao.get(id);
     }
 
     @Override
     public void add(Account account) {
-        accountDao.add(account);
+        jdbcAccountDao.add(account);
     }
 
     @Override
     public void update(Account account) {
-        accountDao.update(account);
+        jdbcAccountDao.update(account);
     }
 
     @Override
     public void delete(Account account) {
-        accountDao.delete(account);
+        jdbcAccountDao.delete(account);
     }
 
 }
