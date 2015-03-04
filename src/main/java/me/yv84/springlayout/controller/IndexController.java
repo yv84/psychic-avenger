@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @Controller
-public class IndexController {
+public class IndexController extends BaseController {
     static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
@@ -54,5 +54,12 @@ public class IndexController {
             logger.info("index.page: " + id);
             return new ModelAndView("index");
         }
+    }
+
+    @RequestMapping(value="/login", method=RequestMethod.POST)
+    public String login(HttpServletRequest request,
+                              HttpServletResponse response) throws Exception {
+        logger.info("login");
+        return redirectTo("/");
     }
 }
