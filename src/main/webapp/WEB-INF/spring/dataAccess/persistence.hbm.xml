@@ -20,8 +20,8 @@
 
     <!-- Drop and re-create the database schema on startup -->
     <property name="hbm2ddl.auto">create</property>
-
-    <!--<mapping class="me.yv84.springlayout.User"/>-->
+      
+    <mapping resource="account.hbm.xml"/>
 
   </session-factory>
 </hibernate-configuration>

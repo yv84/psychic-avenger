@@ -29,7 +29,8 @@ public class BaseDao<T extends BaseModel> {
     private EntityManager entityManager;
 
     public List<T> getAll() {
-        logger.debug("dao.jpa getAll");
+        logger.debug("dao.jpa" +
+            " getAll");
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         logger.debug("builder-> " + builder);
         CriteriaQuery<T> criteria = builder.createQuery(clazz);

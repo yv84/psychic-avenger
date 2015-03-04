@@ -64,31 +64,34 @@
         p:defaultPersistenceUnitName="entityManagerFactory" />
     <context:spring-configured />
 
+
+
+    <!-- Hibernate session factory -->
+    <bean id="hibernateTransactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+          p:sessionFactory-ref="sessionFactory" />
+    <tx:annotation-driven mode="aspectj" 
+            transaction-manager="hibernateTransactionManager"/>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+        p:configLocations="/WEB-INF/spring/dataAccess/persistence.hbm.xml"
+        p:packagesToScan="me.yv84.springlayout.model"
+        p:dataSource-ref="dataSource"/>
+    
+    
     <!-- JPA entity manager -->
     <!-- Declare a transaction manager-->
-    <bean id="transactionManager" 
+    <bean id="transactionManager"
           class="org.springframework.orm.jpa.JpaTransactionManager"
-        p:entityManagerFactory-ref="entityManagerFactory" />
+          p:entityManagerFactory-ref="entityManagerFactory" />
 
     <!-- proxy / aspectj -->
     <tx:annotation-driven mode="aspectj" transaction-manager="transactionManager"/>
 
     <!-- jpa entitymanager -->
-    <bean id="entityManagerFactory" 
+    <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-        p:persistenceUnitName="persistenceUnit"
-        p:dataSource-ref="dataSource" />
-
-    <!-- Hibernate session factory -->
-    <bean id="transactionManager2"
-          class="org.springframework.orm.hibernate4.HibernateTransactionManager"
-          p:sessionFactory-ref="sessionFactory2" />
-    <tx:annotation-driven mode="aspectj" transaction-manager="transactionManager2"/>
-
-    <bean id="sessionFactory2"
-          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
-        p:configLocations="/WEB-INF/spring/dataAccess/persistence.hbm.xml"
-        p:packagesToScan="me.yv84.springlayout"
-        p:dataSource-ref="dataSource"/>
-
+          p:persistenceUnitName="persistenceUnit"
+          p:dataSource-ref="dataSource" />
 </beans>

@@ -16,15 +16,18 @@ public class AccountManagerImpl implements AccountManager {
     
     @Autowired
     private AccountDao jpaAccountDao;
+
+    @Autowired
+    private AccountDao hibernateAccountDao;
     
     @Override
     public List<Account> getAll() {
-        return jpaAccountDao.getAll();
+        return hibernateAccountDao.getAll();
     }
 
     @Override
     public Account get(Long id) {
-        return jpaAccountDao.get(id);
+        return hibernateAccountDao.get(id);
     }
 
     @Override
