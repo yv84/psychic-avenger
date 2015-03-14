@@ -3,6 +3,8 @@ package me.yv84.springlayout.repository.jdbc.impl;
 import com.mchange.v2.c3p0.C3P0ProxyStatement;
 import me.yv84.springlayout.model.Account;
 import me.yv84.springlayout.repository.AccountDao;
+import me.yv84.springlayout.repository.ConnectionProvider;
+import me.yv84.springlayout.repository.Provider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ public class AccountDaoImpl implements AccountDao {
     static final Logger logger = LoggerFactory.getLogger(AccountDaoImpl.class);
     
     @Autowired
+    @ConnectionProvider(provider=Provider.C3P0)
     private DataSource dataSource;
 
     private static String printC3p0Statement( C3P0ProxyStatement stmt )

@@ -19,7 +19,8 @@
 
     <!-- Data Source -->
     <bean id="c3p0DataSource" autowire="byName"
-          class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+          class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close"
         p:driverClass="${db.driverClassName}"
         p:jdbcUrl="${db.url}"
         p:user="${db.username}"
@@ -37,20 +38,30 @@
         p:checkoutTimeout="5000"
         p:idleConnectionTestPeriod="60"
         p:testConnectionOnCheckout="true"
-        p:testConnectionOnCheckin="true" />
+        p:testConnectionOnCheckin="true" >
+        <qualifier type="me.yv84.springlayout.repository.ConnectionProvider">
+            <attribute key="provider" value="C3P0"/>
+        </qualifier>
+    </bean>
     <bean id="dbcpDataSource"  autowire="byName"
           class="org.apache.commons.dbcp.BasicDataSource"
         p:driverClassName="${db.driverClassName}"
         p:url="${db.url}"
         p:username="${db.username}"
         p:password="${db.password}"
-        p:maxActive="5" />
+        p:maxActive="5" >
+        <qualifier type="me.yv84.springlayout.repository.ConnectionProvider">
+            <attribute key="provider" value="DBCP"/>
+        </qualifier>
+    </bean>
     <bean id="jdbcDataSource"  autowire="byName"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
         p:driverClassName="${db.driverClassName}"
         p:url="${db.url}"
         p:username="${db.username}"
-        p:password="${db.password}" />
+        p:password="${db.password}" >
+        <meta key="provider" value="JDBC" />
+    </bean>
     <alias name="c3p0DataSource" alias="dataSource"/>
 
     <!-- Scans within the base package of the application for @Components to configure as beans -->
