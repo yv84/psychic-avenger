@@ -48,6 +48,10 @@
              <a class="account_delete" href="/account/${account.id}">Delete</a>
             </p>
         </c:forEach>
+        <p>
+            <input class="account_add" type="text" value="" />
+            <a class="account_add" href="#" class="btn">Add</a>
+        </p>
     </div>
     <%-- jquery --%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

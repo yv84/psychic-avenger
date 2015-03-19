@@ -62,8 +62,8 @@ public class AccountManagerImpl implements AccountManager {
     }
 
     @Override
-    public void add(Account account) {
-        dMybatisDao.insertAccount(account);
+    public Long add(Account account) {
+        return dMybatisDao.insertAccount(account);
     }
 
     @Override

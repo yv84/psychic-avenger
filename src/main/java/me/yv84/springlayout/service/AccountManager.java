@@ -10,7 +10,7 @@ public interface AccountManager {
     List<Account> getAll();
 
     Account get(Long id);
-    void add(Account account);
+    Long add(Account account);
     void update(Account account);
     void delete(Account account);
     

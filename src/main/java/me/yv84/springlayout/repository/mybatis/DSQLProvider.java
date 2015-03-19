@@ -25,6 +25,7 @@ public class DSQLProvider {
     public String insertAccount() {
         return new SQL() {{
             INSERT_INTO("USER");
+            VALUES("ID", "#{id}");
             VALUES("USERNAME", "#{username}");
         }}.toString();
     }

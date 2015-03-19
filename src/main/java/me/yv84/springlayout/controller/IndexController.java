@@ -102,5 +102,17 @@ public class IndexController extends BaseController {
         }
         return account;
     }
+
+    @ResponseBody
+    @RequestMapping(value="/account/",
+        method=RequestMethod.POST,
+        produces = "application/json")
+    public Account accountInsert(@RequestParam(value="username") String username,
+                                 HttpServletRequest request, HttpServletResponse response)
+        throws Exception {
+        logger.info("" + username);
+        Long id = accountManager.add(new Account(username));
+        return new Account(id, username);
+    }
     
 }
