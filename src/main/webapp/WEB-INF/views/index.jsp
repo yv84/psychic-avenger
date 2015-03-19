@@ -43,8 +43,8 @@
     <div id="account_handler">
         <c:forEach items="${accounts}" var="account">
             <p>
-             ${account.id},
-             ${account.username},
+             <span class="account_id">${account.id}</span>,
+             <span class="account_username">${account.username}</span>,
              <a class="account_delete" href="/account/${account.id}">Delete</a>
             </p>
         </c:forEach>
