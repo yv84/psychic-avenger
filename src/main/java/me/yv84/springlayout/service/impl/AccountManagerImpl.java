@@ -4,6 +4,7 @@ import me.yv84.springlayout.model.Account;
 import me.yv84.springlayout.repository.AccountDao;
 import me.yv84.springlayout.repository.mybatis.AAccountMapper;
 import me.yv84.springlayout.repository.mybatis.AccountMapper;
+import me.yv84.springlayout.repository.mybatis.DAccountMapper;
 import me.yv84.springlayout.service.AccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,15 @@ public class AccountManagerImpl implements AccountManager {
     public void setAuserMapper(AAccountMapper aMybatisDao) {
         this.aMybatisDao = aMybatisDao;
     }
+
+    private DAccountMapper dMybatisDao;
+    public DAccountMapper getDuserMapper() {
+        return dMybatisDao;
+    }
+    @Autowired
+    public void setDuserMapper(DAccountMapper dMybatisDao) {
+        this.dMybatisDao = dMybatisDao;
+    }
     
     
     @Override
@@ -48,7 +58,7 @@ public class AccountManagerImpl implements AccountManager {
 
     @Override
     public Account get(Long id) {
-        return aMybatisDao.findUserById(id);
+        return dMybatisDao.selectAccountById(id);
     }
 
     @Override
