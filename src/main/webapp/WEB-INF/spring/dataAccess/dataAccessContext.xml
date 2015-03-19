@@ -5,6 +5,7 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
        xsi:schemaLocation="
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.0.xsd
@@ -13,7 +14,9 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd" >
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://mybatis.org/schema/mybatis-spring
+        http://mybatis.org/schema/mybatis-spring.xsd" >
 
     <!--<context:property-placeholder-->
             <!--location="classpath*:db.properties"/> src/main/resources/-->
@@ -87,7 +90,8 @@
         p:basePackage="me.yv84.springlayout.repository.mybatis"
         p:sqlSessionFactoryBeanName="sqlSessionFactory" >
     </bean>
-
+    <mybatis:scan base-package="me.yv84.springlayout.repository.mybatis" />
+    
     <bean id="mybatisTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>

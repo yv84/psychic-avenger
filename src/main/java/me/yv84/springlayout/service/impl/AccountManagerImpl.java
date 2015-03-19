@@ -2,6 +2,7 @@ package me.yv84.springlayout.service.impl;
 
 import me.yv84.springlayout.model.Account;
 import me.yv84.springlayout.repository.AccountDao;
+import me.yv84.springlayout.repository.mybatis.AAccountMapper;
 import me.yv84.springlayout.repository.mybatis.AccountMapper;
 import me.yv84.springlayout.service.AccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,15 @@ public class AccountManagerImpl implements AccountManager {
         this.mybatisDao = mybatisDao;
     }
     
+    private AAccountMapper aMybatisDao;
+    public AAccountMapper getAuserMapper() {
+        return aMybatisDao;
+    }
+    @Autowired
+    public void setAuserMapper(AAccountMapper aMybatisDao) {
+        this.aMybatisDao = aMybatisDao;
+    }
+    
     
     @Override
     public List<Account> getAll() {
@@ -38,7 +48,7 @@ public class AccountManagerImpl implements AccountManager {
 
     @Override
     public Account get(Long id) {
-        return mybatisDao.selectByPrimaryKey(id);
+        return aMybatisDao.findUserById(id);
     }
 
     @Override
