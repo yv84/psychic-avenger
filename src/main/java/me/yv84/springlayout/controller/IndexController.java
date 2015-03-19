@@ -73,8 +73,8 @@ public class IndexController extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value="/account/delete/{id}",
-        method=RequestMethod.GET,
+    @RequestMapping(value="/account/{id}",
+        method=RequestMethod.DELETE,
         produces = "application/json")
     public Account accountDelete(@PathVariable Long id,
             HttpServletRequest request, HttpServletResponse response)

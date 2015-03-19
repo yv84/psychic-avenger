@@ -4,9 +4,12 @@
 <%@ page session="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<html>
+
+<!DOCTYPE html>
+<html lang="en" class="">
 <head>
     <META http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <META http-equiv="Content-Language" content="en">
     <title><fmt:message key="welcome.title"/></title>
     <%--Latest compiled and minified CSS--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -37,12 +40,12 @@
         </form>
     </div>
 
-    <div>
+    <div id="account_handler">
         <c:forEach items="${accounts}" var="account">
             <p>
              ${account.id},
              ${account.username},
-             <a href="/account/delete/${account.id}">Delete</a>
+             <a class="account_delete" href="/account/${account.id}">Delete</a>
             </p>
         </c:forEach>
     </div>
