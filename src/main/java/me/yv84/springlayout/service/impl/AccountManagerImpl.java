@@ -53,7 +53,7 @@ public class AccountManagerImpl implements AccountManager {
     
     @Override
     public List<Account> getAll() {
-        return jdbcAccountDao.getAll();
+        return dMybatisDao.selectAllAccounts();
     }
 
     @Override
@@ -63,17 +63,17 @@ public class AccountManagerImpl implements AccountManager {
 
     @Override
     public void add(Account account) {
-        jdbcAccountDao.add(account);
+        dMybatisDao.insertAccount(account);
     }
 
     @Override
     public void update(Account account) {
-        jdbcAccountDao.update(account);
+        dMybatisDao.updateAccount(account);
     }
 
     @Override
     public void delete(Account account) {
-        jdbcAccountDao.delete(account);
+        dMybatisDao.deleteAccount(account);
     }
 
 }
