@@ -2,6 +2,7 @@ package me.yv84.springlayout.service.impl;
 
 import me.yv84.springlayout.model.Account;
 import me.yv84.springlayout.repository.AccountDao;
+import me.yv84.springlayout.repository.mybatis.AccountMapper;
 import me.yv84.springlayout.service.AccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,15 +20,25 @@ public class AccountManagerImpl implements AccountManager {
 
     @Autowired
     private AccountDao hibernateAccountDao;
+
+    private AccountMapper mybatisDao;
+    public AccountMapper getMuserMapper() {
+        return mybatisDao;
+    }
+    @Autowired
+    public void setMuserMapper(AccountMapper mybatisDao) {
+        this.mybatisDao = mybatisDao;
+    }
+    
     
     @Override
     public List<Account> getAll() {
-        return hibernateAccountDao.getAll();
+        return jdbcAccountDao.getAll();
     }
 
     @Override
     public Account get(Long id) {
-        return hibernateAccountDao.get(id);
+        return mybatisDao.selectByPrimaryKey(id);
     }
 
     @Override

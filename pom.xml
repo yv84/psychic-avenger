@@ -20,6 +20,8 @@
       <jetty-servlet.version>9.2.8.v20150217</jetty-servlet.version>
       <hsqldb.version>2.3.2</hsqldb.version>
       <jta.version>1.1</jta.version>
+      <mybatis.version>3.2.8</mybatis.version>
+      <mybatis-spring.version>1.2.2</mybatis-spring.version>
       <servlet-api.version>2.5</servlet-api.version>
       <log4j.version>1.2.15</log4j.version>
       <slf4j.version>1.7.10</slf4j.version>
@@ -138,6 +140,17 @@
           <version>${spring.version}</version>
       </dependency>
 
+      <!-- myBatis -->
+      <dependency>
+          <groupId>org.mybatis</groupId>
+          <artifactId>mybatis</artifactId>
+          <version>${mybatis.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.mybatis</groupId>
+          <artifactId>mybatis-spring</artifactId>
+          <version>${mybatis-spring.version}</version>
+      </dependency>
 
       <!-- Servlet -->
       <dependency>
@@ -146,6 +159,7 @@
           <version>${servlet-api.version}</version>
       </dependency>
 
+      <!-- Logging -->
       <dependency>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-api</artifactId>
