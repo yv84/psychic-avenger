@@ -23,6 +23,8 @@
       <mybatis.version>3.2.8</mybatis.version>
       <mybatis-spring.version>1.2.2</mybatis-spring.version>
       <servlet-api.version>2.5</servlet-api.version>
+      <fasterxml.jackson>2.4.1.1</fasterxml.jackson>
+      <jackson.version>1.9.13</jackson.version>
       <log4j.version>1.2.15</log4j.version>
       <slf4j.version>1.7.10</slf4j.version>
       <jetty.version>9.2.8.v20150217</jetty.version>
@@ -157,6 +159,30 @@
           <groupId>javax.servlet</groupId>
           <artifactId>servlet-api</artifactId>
           <version>${servlet-api.version}</version>
+      </dependency>
+      
+      <!-- Jackson -->
+      <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+          <version>${fasterxml.jackson}</version>
+      </dependency>
+      <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+          <version>${fasterxml.jackson}</version>
+      </dependency>
+      
+      <dependency>
+          <groupId>org.codehaus.jackson</groupId>
+          <artifactId>jackson-core-asl</artifactId>
+          <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.codehaus.jackson</groupId>
+          <artifactId>jackson-mapper-asl</artifactId>
+          <version>${jackson.version}</version>
       </dependency>
 
       <!-- Logging -->

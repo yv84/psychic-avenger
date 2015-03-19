@@ -1,10 +1,13 @@
 package me.yv84.springlayout.repository.mybatis;
 
 import me.yv84.springlayout.model.Account;
+import org.apache.ibatis.annotations.DeleteProvider;
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.UpdateProvider;
 
 import java.util.List;
 
@@ -29,17 +32,17 @@ public interface DAccountMapper {
     })
     List<Account> selectAllAccounts();
 
-    @SelectProvider(type=DSQLProvider.class,
+    @InsertProvider(type=DSQLProvider.class,
         method="insertAccount")
     @SelectKey(statement="call identity()",
         keyProperty="id", before=false, resultType=long.class)
     Long insertAccount(Account account);
     
-    @SelectProvider(type=DSQLProvider.class,
+    @UpdateProvider(type=DSQLProvider.class,
         method="updateAccount")
     void updateAccount(Account account);
 
-    @SelectProvider(type=DSQLProvider.class,
+    @DeleteProvider(type=DSQLProvider.class,
         method="deleteAccountById")
     void deleteAccount(Account account);
     
