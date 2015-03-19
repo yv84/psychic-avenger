@@ -30,6 +30,16 @@
             <input type="submit"/>
         </form>
     </div>
+
+    <div>
+        <c:forEach items="${accounts}" var="account">
+            <p>
+             ${account.id},
+             ${account.username},
+             <a href="/account/delete/${account.id}">Delete</a>
+            </p>
+        </c:forEach>
+    </div>
     <script src="<c:url value="/resources/assets/js/main.js" />"></script>
 </body>
 </html>
