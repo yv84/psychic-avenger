@@ -8,6 +8,12 @@
 <head>
     <META http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title><fmt:message key="welcome.title"/></title>
+    <%--Latest compiled and minified CSS--%>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <%--Optional theme--%>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    
     <link rel="stylesheet" href="<c:url value="/resources/assets/css/main.css" />"
           type="text/css" media="screen">
     <title></title>
@@ -40,6 +46,10 @@
             </p>
         </c:forEach>
     </div>
+    <%-- jquery --%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <%--Latest compiled and minified JavaScript--%>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/assets/js/main.js" />"></script>
 </body>
 </html>
