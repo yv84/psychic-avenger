@@ -57,7 +57,7 @@ public class IndexController extends BaseController {
 
             {
                 Account rs = accountManager.get(id);
-                System.out.println(rs.getId() + ", " + rs.getUsername());
+                logger.info("account: " + rs.toString());
             }
 
             logger.info("account id: " + id);

@@ -48,4 +48,13 @@ public class Fullname extends BaseModel  {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+
+    @Override
+    public String toString() {
+        return "Fullname{" +
+            "account=" + account +
+            ", firstname='" + firstname + '\'' +
+            ", lastname='" + lastname + '\'' +
+            '}';
+    }
 }

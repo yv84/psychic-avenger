@@ -56,9 +56,30 @@ public class Account extends BaseModel {
         this.roles = roles;
     }
 
-    @Override
-    public String toString() {
-        return getUsername();
+    public Fullname getFullname() {
+        return fullname;
     }
 
+    public void setFullname(Fullname fullname) {
+        this.fullname = fullname;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    @Override
+    public String toString() {
+        return "Account id = " + id +
+            " {" +
+            "username='" + username + '\'' +
+            ", roles=" + roles +
+            ", fullname=" + fullname +
+            ", addresses=" + addresses +
+            '}';
+    }
 }

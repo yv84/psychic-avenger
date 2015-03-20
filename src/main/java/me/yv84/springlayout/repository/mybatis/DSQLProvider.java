@@ -45,6 +45,21 @@ public class DSQLProvider {
         }}.toString();
     }
     
+    public String accountWithFullnameById() {
+        return new SQL() {{
+            SELECT("u.id, u.username, f.ID as fid");
+            FROM("USER AS u");
+            INNER_JOIN("FULLNAME AS f ON u.id = f.id");
+            WHERE("u.ID=#{id}");
+        }}.toString();
+    }
     
-    
+    public String selectFullnameById() {
+        return new SQL() {{
+            SELECT("f.FIRSTNAME, f.LASTNAME");
+            FROM("FULLNAME AS f");
+            WHERE("f.ID=#{id}");
+        }}.toString();
+    }
+
 }

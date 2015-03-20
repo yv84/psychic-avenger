@@ -58,7 +58,7 @@ public class AccountManagerImpl implements AccountManager {
 
     @Override
     public Account get(Long id) {
-        return dMybatisDao.selectAccountById(id);
+        return dMybatisDao.accountWithFullnameById(id);
     }
 
     @Override

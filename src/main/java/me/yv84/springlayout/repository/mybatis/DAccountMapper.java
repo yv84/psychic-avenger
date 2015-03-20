@@ -1,6 +1,7 @@
 package me.yv84.springlayout.repository.mybatis;
 
 import me.yv84.springlayout.model.Account;
+import me.yv84.springlayout.model.Fullname;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -17,6 +18,25 @@ public interface DAccountMapper {
         @Result(column="USERNAME", property="username")
     })
     Account selectAccountById(Long id);
+
+    @SelectProvider(type=DSQLProvider.class,
+        method="selectFullnameById")
+    @Results({
+        @Result(id=true, column="ID", property = "id"),
+        @Result(column="FIRSTNAME", property="firstname"),
+        @Result(column="LASTNAME", property="lastname")
+    })
+    Fullname selectFullnameById(Long id);
+
+    @SelectProvider(type=DSQLProvider.class,
+        method="accountWithFullnameById")
+    @Results({
+        @Result(id=true, column="ID", property = "id"),
+        @Result(column="USERNAME", property="username"),
+        @Result(column="fid", property="fullname",
+            one=@One(select="selectFullnameById")),
+    })
+    Account accountWithFullnameById(Long id);
 
     @SelectProvider(type=DSQLProvider.class,
         method="selectAllAccounts")
