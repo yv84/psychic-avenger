@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import java.util.Set;
 
 
@@ -15,7 +16,10 @@ public class Account extends BaseModel {
     private String username;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
-    private Set<Role> role;
+    private Set<Role> roles;
+
+    @OneToOne(mappedBy = "account")
+    private Fullname fullname;
 
     public Account() {}
 
@@ -34,6 +38,14 @@ public class Account extends BaseModel {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

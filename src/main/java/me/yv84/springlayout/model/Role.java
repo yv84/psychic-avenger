@@ -20,10 +20,10 @@ public class Role extends BaseModel {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "role_user", joinColumns = {
-        @JoinColumn(name = "role_id", nullable = false, updatable = false) },
-        inverseJoinColumns = { @JoinColumn(name = "account_id",
+        @JoinColumn(name = "role_fk", nullable = false, updatable = false) },
+        inverseJoinColumns = { @JoinColumn(name = "account_fk",
             nullable = false, updatable = false) })
-    private Set<Account> users;
+    private Set<Account> accounts;
     
     public Role() {}
 
@@ -44,12 +44,12 @@ public class Role extends BaseModel {
         this.authority = authority;
     }
 
-    public Set<Account> getUsers() {
-        return users;
+    public Set<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setUsers(Set<Account> users) {
-        this.users = users;
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
     }
 
     @Override
