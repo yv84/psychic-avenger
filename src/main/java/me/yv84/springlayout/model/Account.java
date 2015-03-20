@@ -1,11 +1,15 @@
 package me.yv84.springlayout.model;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.util.List;
 import java.util.Set;
 
 
@@ -20,6 +24,10 @@ public class Account extends BaseModel {
 
     @OneToOne(mappedBy = "account")
     private Fullname fullname;
+
+    @OneToMany(cascade={CascadeType.ALL})
+    @JoinColumn(name = "address_fk")
+    private List<Address> addresses;
 
     public Account() {}
 
