@@ -3,6 +3,9 @@ package me.yv84.springlayout.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import java.util.Set;
 
 
 @Entity(name="user")
@@ -11,10 +14,8 @@ public class Account extends BaseModel {
     @Column(nullable = false, unique = true)
     private String username;
 
-
-    public String getUsername() {
-        return username;
-    }
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    private Set<Role> role;
 
     public Account() {}
 
@@ -25,6 +26,10 @@ public class Account extends BaseModel {
     public Account(Long id, String username) {
         this.id = id;
         this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {
