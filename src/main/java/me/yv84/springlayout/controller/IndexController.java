@@ -29,11 +29,15 @@ public class IndexController extends BaseController {
     @RequestMapping(value="/", method=RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        logger.info("index.page");
         ModelAndView modelAndView = new ModelAndView();
+        logger.info("index.page");
+        List<Object> revenue = accountManager.getRevenue30Day();
+        logger.debug("revenue/date-> " + revenue.toString());
+        modelAndView.addObject("revenues", revenue);
+
         List<Account> rsList = accountManager.getAll();
         modelAndView.addObject("accounts", rsList);
-
+        
         Iterator<Account> resultIterator = rsList.iterator();
         while (resultIterator.hasNext()) {
             Account rs = resultIterator.next();

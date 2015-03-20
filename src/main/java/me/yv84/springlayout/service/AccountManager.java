@@ -14,5 +14,7 @@ public interface AccountManager {
     Long add(Account account);
     void update(Account account);
     void delete(Account account);
+
+    List<Object> getRevenue30Day();
     
 }

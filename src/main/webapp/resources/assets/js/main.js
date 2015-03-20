@@ -1,4 +1,4 @@
-(function() {
+(function($, undefined) {
 "use strict";
 console.log("resources/assets/main.js");
 
@@ -84,4 +84,4 @@ $("#account_handler").on("click", function (event) {
     
     return false;
 })
-})();
+})(jQuery);

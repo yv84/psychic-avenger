@@ -50,13 +50,97 @@
         </c:forEach>
         <p>
             <input class="account_add" type="text" value="" />
-            <a class="account_add" href="#" class="btn">Add</a>
+            <a class="account_add btn" href="#" >Add</a>
         </p>
     </div>
+    <div id="container"
+         style="min-width: 728px; height: 400px; margin: 0 auto"></div>
     <%-- jquery --%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <%--Latest compiled and minified JavaScript--%>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/assets/js/main.js" />"></script>
+    <%-- highcharts --%>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<script>
+    $(function () {
+        parseDate = function (sqlDateStr) {
+            sqlDateStr = sqlDateStr.replace(/:| /g,"-");
+            var YMDhms = sqlDateStr.split("-");
+            var sqlDate = new Date();
+            sqlDate.setFullYear(
+                    parseInt(YMDhms[0]),
+                    parseInt(YMDhms[1])-1,
+                    parseInt(YMDhms[2])
+            );
+            sqlDate.setHours(
+                    parseInt(YMDhms[3]),
+                    parseInt(YMDhms[4]),
+                    parseInt(YMDhms[5]),
+                    0/*msValue*/
+            );
+            return sqlDate;
+        };
+        $('#container').highcharts({
+            chart: {
+                type: 'spline'
+            },
+            title: {
+                text: 'Revenue'
+            },
+            subtitle: {
+                text: 'Revenue for each day of last month'
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: { // don't display the dummy year
+                    month: '%e. %b',
+                    year: '%b'
+                },
+                title: {
+                    text: 'Date'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Money'
+                },
+                min: 0
+            },
+            tooltip: {
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '{point.x:%e. %b}: {point.y}'
+            },
+
+            plotOptions: {
+                spline: {
+                    marker: {
+                        enabled: true
+                    }
+                },
+                series: {
+                    connectNulls: true
+                }
+            },
+
+            series: [{
+                name: 'Выручка',
+                // Define the data points. All series have a dummy year
+                // of 1970/71 in order to be compared on the same x axis. Note
+                // that in JavaScript, months start at 0 for January, 1 for February etc.
+                data: [
+                    <c:forEach items="${revenues}" var="v_item">
+                    [parseDate('${v_item['created']}').getTime(),
+                        ${v_item['revenue']} ],
+                    </c:forEach>
+                ]
+            }]
+        });
+    });
+</script>
+
+
 </body>
 </html>
