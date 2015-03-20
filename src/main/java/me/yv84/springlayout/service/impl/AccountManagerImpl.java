@@ -62,6 +62,11 @@ public class AccountManagerImpl implements AccountManager {
     }
 
     @Override
+    public List<Account> getList(Long id) {
+        return dMybatisDao.accountWithAddressById(id);
+    }
+
+    @Override
     public Long add(Account account) {
         return dMybatisDao.insertAccount(account);
     }

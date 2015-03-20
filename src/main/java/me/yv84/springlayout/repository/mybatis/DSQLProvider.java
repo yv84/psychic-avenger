@@ -49,7 +49,7 @@ public class DSQLProvider {
         return new SQL() {{
             SELECT("u.id, u.username, f.ID as fid");
             FROM("USER AS u");
-            INNER_JOIN("FULLNAME AS f ON u.id = f.id");
+            INNER_JOIN("FULLNAME AS f ON u.id = f.account_fk");
             WHERE("u.ID=#{id}");
         }}.toString();
     }
@@ -61,5 +61,25 @@ public class DSQLProvider {
             WHERE("f.ID=#{id}");
         }}.toString();
     }
+
+    public String accountWithAddressById() {
+        return new SQL() {{
+            SELECT("u.id, u.username, a.ID as address_fk");
+            FROM("USER AS u");
+            INNER_JOIN("ADDRESS AS a ON u.id = a.account_fk");
+            WHERE("u.ID=#{id}");
+        }}.toString();
+    }
+    
+    public String selectAddressById() {
+        return new SQL() {{
+            SELECT("a.ID, a.CITY");
+            FROM("ADDRESS AS a");
+            WHERE("a.ID=#{id}");
+        }}.toString();
+    }
+    
+    
+    
 
 }

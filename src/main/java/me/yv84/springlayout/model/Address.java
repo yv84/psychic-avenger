@@ -19,5 +19,12 @@ public class Address extends BaseModel  {
 
     @Column(nullable = true, unique = false)
     private String city;
-    
+
+    @Override
+    public String toString() {
+        return "Address{" +
+            "account=" + account +
+            ", city='" + city + '\'' +
+            '}';
+    }
 }

@@ -1,10 +1,12 @@
 package me.yv84.springlayout.repository.mybatis;
 
 import me.yv84.springlayout.model.Account;
+import me.yv84.springlayout.model.Address;
 import me.yv84.springlayout.model.Fullname;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yv84 on 3/19/15.
@@ -38,6 +40,25 @@ public interface DAccountMapper {
     })
     Account accountWithFullnameById(Long id);
 
+    @SelectProvider(type=DSQLProvider.class,
+        method="selectAddressById")
+    @Results({
+        @Result(id=true, column="ID", property = "id"),
+        @Result(column="CITY", property="city")
+    })
+    Address selectAddressById();
+
+    @SelectProvider(type=DSQLProvider.class,
+        method="accountWithAddressById")
+    @Results({
+        @Result(id=true, column="ID", property = "id"),
+        @Result(column="USERNAME", property="username"),
+        @Result(column="address_fk", property="addresses", javaType=List.class,
+            many=@Many(select="selectAddressById")),
+    })
+    List<Account> accountWithAddressById(Long id);
+    
+    
     @SelectProvider(type=DSQLProvider.class,
         method="selectAllAccounts")
     @Results({

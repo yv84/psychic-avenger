@@ -55,6 +55,13 @@ public class IndexController extends BaseController {
             throw new ResourceNotFoundException(id);
         } else {
 
+            List<Account> rsList = accountManager.getList(id);
+            Iterator<Account> resultIterator = rsList.iterator();
+            while (resultIterator.hasNext()) {
+                Account rs = resultIterator.next();
+                logger.info("account: " + rs.toString());
+            }
+            
             {
                 Account rs = accountManager.get(id);
                 logger.info("account: " + rs.toString());
